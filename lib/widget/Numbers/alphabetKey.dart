@@ -39,7 +39,7 @@ class _AlphabetKeysState extends State<AlphabetKeys> {
             },
           ),
           Spacer(),
-          CustomKeyboard(
+          CustomKeyboardNum(
             onTextInput: (myText) {
               _insertText(myText);
             },

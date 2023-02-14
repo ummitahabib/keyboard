@@ -5,8 +5,8 @@ import 'backspacekey.dart';
 import 'capslock.dart';
 import 'enterkey.dart';
 
-class CustomKeyboard extends StatelessWidget {
-  const CustomKeyboard({
+class CustomKeyboardNum extends StatefulWidget {
+  const CustomKeyboardNum({
     Key? key,
     this.onTextInput,
     this.onBackspace,
@@ -15,9 +15,14 @@ class CustomKeyboard extends StatelessWidget {
   final ValueSetter<String>? onTextInput;
   final VoidCallback? onBackspace;
 
-  void _textInputHandler(String text) => onTextInput?.call(text);
+  @override
+  State<CustomKeyboardNum> createState() => _CustomKeyboardNumState();
+}
 
-  void _backspaceHandler() => onBackspace?.call();
+class _CustomKeyboardNumState extends State<CustomKeyboardNum> {
+  void _textInputHandler(String text) => widget.onTextInput?.call(text);
+
+  void _backspaceHandler() => widget.onBackspace?.call();
 
   @override
   Widget build(BuildContext context) {
@@ -178,10 +183,13 @@ class CustomKeyboard extends StatelessWidget {
     return Expanded(
       child: Row(
         children: [
-          TextKey(
-            text: 'ABC',
-            onTextInput: _textInputHandler,
-          ),
+          GestureDetector(
+              onTap: () {
+                setState(() {
+                  Navigator.pop(context);
+                });
+              },
+              child: Text('ABC')),
           TextKey(
             text: ' space ',
             flex: 4,

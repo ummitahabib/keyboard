@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:keyboard/widget/Alphabets/text_key.dart';
 
+import '../Numbers/customeKeyboard.dart';
 import 'backspacekey.dart';
 import 'capslock.dart';
 import 'enterkey.dart';
 
-class CustomKeyboard extends StatelessWidget {
+class CustomKeyboard extends StatefulWidget {
   const CustomKeyboard({
     Key? key,
     this.onTextInput,
@@ -15,9 +16,14 @@ class CustomKeyboard extends StatelessWidget {
   final ValueSetter<String>? onTextInput;
   final VoidCallback? onBackspace;
 
-  void _textInputHandler(String text) => onTextInput?.call(text);
+  @override
+  State<CustomKeyboard> createState() => _CustomKeyboardState();
+}
 
-  void _backspaceHandler() => onBackspace?.call();
+class _CustomKeyboardState extends State<CustomKeyboard> {
+  void _textInputHandler(String text) => widget.onTextInput?.call(text);
+
+  void _backspaceHandler() => widget.onBackspace?.call();
 
   @override
   Widget build(BuildContext context) {
@@ -182,10 +188,17 @@ class CustomKeyboard extends StatelessWidget {
     return Expanded(
       child: Row(
         children: [
-          TextKey(
-            text: '?123',
-            onTextInput: _textInputHandler,
-          ),
+          GestureDetector(
+              onTap: () {
+                setState(() {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const CustomKeyboardNum()),
+                  );
+                });
+              },
+              child: Text('?123')),
           TextKey(
             text: ',',
             onTextInput: _textInputHandler,
